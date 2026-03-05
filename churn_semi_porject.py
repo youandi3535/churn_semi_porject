@@ -63,3 +63,4 @@ pd.set_option('max_colwidth', None)
 df = pd.read_csv(r"C:\IT\workspace_python\ST\train.csv")
 #df_sample = pd.read_csv(r"C:\IT\workspace_ptyhon\ST\sample_submission.csv")
 #df_test = pd.read_csv(r"C:\IT\workspace_ptyhon\ST\test.csv")
+
