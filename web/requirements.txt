@@ -1,13 +1,1 @@
-
-pandas
-sqlalchemy
-python-dotenv
-cx_Oracle
-
-
-flask
-
-
-
-
-groq
+#1. churn_insert.py 실행시 필요한 라이브러러리
