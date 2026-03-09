@@ -1,0 +1,43 @@
+1. 고사용 + 장기 고객이 위험 : df["usage_tenure_interaction"] = df["total_minutes"] * df["tenure"]
+
+
+---------------------------------------------------------------------------------------------------------
+주제 1. 불만고객형(핵심: 상담은 ‘임계점 기반 위험 신호’ )
+	1-1 상담 건수 분위별 이탈률(cs_calls) - X: cs_calls_decile Y: churn_rate
+	1-2 100분당 상담 건수 분위별 이탈률(cs_per_100min) - X: cs_per_100min_decile Y: churn_rate
+	1-3 통화 대비 상담 비율 vs 이탈률(cs_ratio) - X: cs_ratio_decile Y: churn_rate
+	=> 1-2, 1-3 이탈률 모양 유사하지만 관점이 다른거임 cs_per_100min은 사용량 대비 불만, cs_ratio은 통화 품질 대비 불만
+	**1-4 상담 상위 10% vs 나머지 비교 (Bar) -  X: cs_top10 (Top10 / Others) Y: churn_rate
+	 df["cs_top10"] = (df["cs_per_100min"] >= df["cs_per_100min"].quantile(0.9)).astype(int)
+
+
+주제 2. 이용강도형 (사용량 & 요금) (핵심: 몰입도 ↑ → 이탈 ↓)
+	2-1 총 사용량 분위별 이탈률(total_minutes) - X: total_minutes_decile Y: churn_rate
+	2-2 평균 요금 분위별 이탈률(avg_rate) - X: avg_rate_decile Y: churn_rate
+	2-3 요금 변동성(rate_std) 분위별 이탈률(rate_std) - X: rate_std_decile Y: churn_rate
+	사용량 분위 × 평균요금 분위 이탈률 (Clustered Bar)(total_minutes_decile,avg_rate_decile,AVG(churn) → churn_rate) - X: total_minutes_decile Y: churn_rate
+
+주제 3. 시간대별 패턴(핵심: 밤 비중 ↑ / 패턴 불안정 ↑ → 위험)
+	3-1 night_ratio 분위별 이탈률(night_ratio) - X: night_ratio_decile Y: churn_rate
+	3-2 night_day_diff 분위별 이탈률(night_day_diff) - X: night_day_diff_decile Y: churn_rate
+	3-3 시간대 집중도(time_ratio_std) vs 이탈률(time_ratio_std) - X: time_ratio_std_decile Y: churn_rate
+	**3-4 낮 사용 비중 그룹 비교(X: day_heavy_user Y: churn_rate)
+	 df["day_heavy_user"] = (df["day_ratio"] >= df["day_ratio"].quantile(0.75)).astype(int)
+
+
+주제 4. 장기사용형(핵심: 단독 tenure는 약함, 상호작용은 강함)
+	4-1 가입기간 분위별 이탈률(tenure) - X: tenure_decile Y: churn_rate
+	4-2 Usage 4분위 × Tenure 4분위 이탈률 (이중 라인그래프)(usage_q, tenure_q,AVG(churn) → churn_rate) - X: usage_q Y: churn_rate
+	**4-3 고사용 + 장기 고객 vs 나머지(X: long_high_usage Y: churn_rate)
+	df["long_high_usage"] = ((df["usage_q"] >= 3) & (df["tenure_ q"] >= 3)).astype(int)
+	4-4 tenure_log 분위별 이탈률(tenure_log) X: tenure_log_decile Y: churn_rate
+
+
+주제 5. 행동패턴형(핵심: 단조로운 고객이 먼저 떠난다)
+	5-1 평균요금 분위 × 요금변동성 분위 이탈률 (Clustered Bar)(avg_rate_decile,rate_std_decile,AVG(churn) → churn_rate) - X: avg_rate_decile Y: churn_rate
+	5-2 vm_binary vs 이탈률(vm_binary) - X: 0/1 Y: churn_rate
+	5-3 vm_count_log 분위별 이탈률(vm_count_log) - X: vm_count_log_decile Y: churn_rate
+	5-4 총 통화 횟수(total_calls) 분위별 이탈률(total_calls) - X: total_calls_decile Y: churn_rate
+
+
+

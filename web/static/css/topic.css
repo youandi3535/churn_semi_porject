@@ -1,0 +1,122 @@
+/* ============================================================
+   chart_topic.css — 차트 카드 내부 전용 스타일
+   Flask 경로: static/css/chart_topic.css
+
+   [역할]
+     style.css 는 건드리지 않음.
+     이 파일은 chart-card 안에 추가된 요소들만 담당:
+       .topic-badge    : 카드 헤더 우측 주제 뱃지
+       .insight-bar    : 차트 위 인사이트 칩 행
+       .insight-chip   : 개별 칩 (warn / info / muted)
+       .threshold-note : 차트 아래 임계점 설명줄
+       .chart-card 로딩 상태
+   ============================================================ */
+
+/* ── 주제 뱃지 (카드 헤더 맨 오른쪽) ── */
+.topic-badge {
+  margin-left: auto;
+  font-size: .60rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .3s, color .3s, border-color .3s;
+
+  /* 기본 (A 불만고객형) */
+  background: rgba(220,38,38,.1);
+  color: #dc2626;
+  border: 1px solid rgba(220,38,38,.25);
+}
+.topic-badge[data-topic="A"] { background:rgba(220,38,38,.1);   color:#dc2626; border-color:rgba(220,38,38,.3); }
+.topic-badge[data-topic="B"] { background:rgba(8,150,199,.1);   color:#0096c7; border-color:rgba(8,150,199,.3); }
+.topic-badge[data-topic="C"] { background:rgba(244,162,97,.15); color:#c2650a; border-color:rgba(244,162,97,.4); }
+.topic-badge[data-topic="D"] { background:rgba(42,157,143,.1);  color:#2a9d8f; border-color:rgba(42,157,143,.3); }
+.topic-badge[data-topic="E"] { background:rgba(123,45,139,.1);  color:#7b2d8b; border-color:rgba(123,45,139,.3); }
+
+
+/* ── 인사이트 칩 바 ── */
+.insight-bar {
+  display: flex;
+  gap: 5px;
+  margin: 0 0 8px;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+}
+
+.insight-chip {
+  font-size: .62rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* 위험/경고 (빨강) */
+.chip-warn {
+  background: rgba(220,38,38,.08);
+  color: #dc2626;
+  border: 1px solid rgba(220,38,38,.2);
+}
+
+/* 정보 (파랑 — 주제 색으로 override 가능) */
+.chip-info {
+  background: rgba(79,70,229,.07);
+  color: #4f46e5;
+  border: 1px solid rgba(79,70,229,.18);
+}
+.insight-bar[data-topic="B"] .chip-info { background:rgba(8,150,199,.07); color:#0096c7; border-color:rgba(8,150,199,.2); }
+.insight-bar[data-topic="C"] .chip-info { background:rgba(244,162,97,.1); color:#c2650a; border-color:rgba(244,162,97,.3); }
+.insight-bar[data-topic="D"] .chip-info { background:rgba(42,157,143,.07);color:#2a9d8f; border-color:rgba(42,157,143,.2); }
+.insight-bar[data-topic="E"] .chip-info { background:rgba(123,45,139,.07);color:#7b2d8b; border-color:rgba(123,45,139,.2); }
+
+/* 회색 (부가 설명) */
+.chip-muted {
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+
+/* ── 하단 임계점 설명줄 ── */
+.threshold-note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 6px;
+  font-size: .72rem;
+  color: #9ca3af;
+  flex-shrink: 0;
+  line-height: 1.4;
+}
+.threshold-line-icon {
+  width: 20px;
+  height: 0;
+  border-top: 2px dashed #f59e0b;
+  flex-shrink: 0;
+}
+
+
+/* ── 카드 로딩 상태 ── */
+.chart-card.loading::after {
+  content: '데이터 로딩 중...';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  color: #9ca3af;
+  background: rgba(255,255,255,.6);
+  border-radius: 18px;
+  z-index: 10;
+}
+
+/* ── AI 챗봇 사이드바 가운데 정렬 ── */
+.chatbot-sidebar { align-items: stretch; }
+.chatbot-card { text-align: center; }
+.chatbot-header { justify-content: center; text-align: center; }
+.insight-main { display:flex; flex-direction:column; align-items:center; text-align:center; width:100%; }
+.insight-number { text-align: center; width: 100%; }
+.insight-label { text-align: center; width: 100%; }
+.chat-arrow { text-align:center; width:100%; display:flex; justify-content:center; }

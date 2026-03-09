@@ -1,0 +1,13 @@
+
+pandas
+sqlalchemy
+python-dotenv
+cx_Oracle
+
+
+flask
+
+
+
+
+groq
