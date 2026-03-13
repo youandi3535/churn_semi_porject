@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  left.html — 공통 레이아웃 참조 템플릿
+  새 페이지 만들 때 이 파일의 사이드바/헤더/KPI/푸터 구조를 복사해서 사용
+
+  [사용법]
+    1. 이 파일을 복사해서 새 HTML 파일 생성
+    2. <!-- PAGE CONTENT HERE --> 부분에 페이지별 내용 삽입
+    3. <link>와 <script> 경로를 Flask url_for로 교체
+  ============================================================
+-->
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Oneplus³</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="static/css/style.css"/>
+</head>
+<body>
+
+<!-- ── 사이드바 (모든 페이지 공통) ── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">📡</div>
+    <div><div class="logo-text">Oneplus³</div><div class="logo-sub">이탈 예측 시스템</div></div>
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-section-label">메인 메뉴</div>
+    <div class="nav-item active">대시보드 홈</div>
+    <div class="nav-item open" onclick="toggleSub(this)">고객 분석<span class="nav-arrow">▶</span></div>
+    <div class="sub-menu open">
+      <div class="sub-item active">이탈 위험군</div>
+      <div class="sub-item">등급별 현황</div>
+      <div class="sub-item">충성 고객</div>
+    </div>
+    <div class="nav-item" onclick="toggleSub(this)">이탈 예측<span class="nav-arrow">▶</span></div>
+    <div class="sub-menu">
+      <div class="sub-item">예측 모델</div>
+      <div class="sub-item">Feature 중요도</div>
+      <div class="sub-item">시뮬레이션</div>
+    </div>
+    <div class="nav-item" onclick="toggleSub(this)">상담 데이터<span class="nav-arrow">▶</span></div>
+    <div class="sub-menu">
+      <div class="sub-item">통화 기록</div>
+      <div class="sub-item">상담 강도 분석</div>
+    </div>
+    <div class="nav-section-label">리포트</div>
+    <div class="nav-item">월간 리포트</div>
+    <div class="nav-item">성과 추적</div>
+    <div class="nav-section-label">시스템</div>
+    <div class="nav-item">설정</div>
+    <div class="nav-item">도움말</div>
+  </div>
+  <div class="sidebar-footer"></div>
+</nav>
+
+<!-- ── 메인 페이지 ── -->
+<div class="page">
+
+  <!-- 헤더 — 타이틀/뱃지 수정 가능 -->
+  <div class="topbar">
+    <div>
+      <div class="topbar-title">페이지 제목</div>
+      <div class="topbar-sub">서브 타이틀</div>
+    </div>
+    <span class="topbar-badge">✦ GROQ</span>
+  </div>
+
+  <!-- KPI 바 — .kpi-value 수치, pass/fail 클래스 수정 -->
+  <div class="kpi-bar">
+    <div class="kpi-item pass">
+      <div class="kpi-left"><span class="kpi-label">KPI 항목 1</span><span class="kpi-value">0.87</span></div>
+      <div class="kpi-right"><span class="kpi-target">목표 ≥ 0.85</span><span class="kpi-badge badge-pass">✔ 목표 달성</span></div>
+    </div>
+    <div class="kpi-item fail">
+      <div class="kpi-left"><span class="kpi-label">KPI 항목 2</span><span class="kpi-value">0.76</span></div>
+      <div class="kpi-right"><span class="kpi-target">목표 ≥ 0.80</span><span class="kpi-badge badge-fail">✘ 미달성</span></div>
+    </div>
+    <div class="kpi-item pass">
+      <div class="kpi-left"><span class="kpi-label">KPI 항목 3</span><span class="kpi-value">38.2<span class="kpi-unit">%</span></span></div>
+      <div class="kpi-right"><span class="kpi-target">기준값 대비</span><span class="kpi-badge badge-pass">✔ 유의미한 상승</span></div>
+    </div>
+  </div>
+
+  <!-- 메인 콘텐츠 — 페이지별 내용 삽입 -->
+  <div class="main-content">
+    <!-- PAGE CONTENT HERE -->
+  </div>
+
+  <!-- 푸터 -->
+  <div class="footer-bar">
+    <span class="footer-text">Oneplus³ Churn Intelligence Platform</span>
+    <span class="footer-right" id="footerTime"></span>
+  </div>
+
+</div>
+
+<script>
+function toggleSub(el){
+  el.classList.toggle('open');
+  const s=el.nextElementSibling;
+  if(s&&s.classList.contains('sub-menu'))s.classList.toggle('open');
+}
+(function tick(){
+  const n=new Date(),p=v=>String(v).padStart(2,'0');
+  const el=document.getElementById('footerTime');
+  if(el)el.textContent=`${n.getFullYear()}.${p(n.getMonth()+1)}.${p(n.getDate())}  ${p(n.getHours())}:${p(n.getMinutes())}`;
+  setTimeout(tick,60000);
+})();
+</script>
+</body>
+</html>
